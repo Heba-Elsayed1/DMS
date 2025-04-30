@@ -11,6 +11,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DirectoryComponent } from "../../../directory/pages/directory/directory.component";
 import { AddDirectoryComponent } from './add-directory/add-directory.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -36,18 +37,30 @@ export class WorkspaceComponent implements OnInit {
 
   constructor(private workspaceService: WorkspaceService,
     private directoryService: DirectoryService, private authService: AuthServiceService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute , private snackBar: MatSnackBar) { }
 
-  updateWorkspace(form: WorkspaceDto) {
-    this.workspaceService.updateWorkspace(form).subscribe({
-      next: data => {
-        this.workspaceName = form.name;
-      },
-      error: err => {
-        console.log(err.error);
-      }
-    })
-  }
+    updateWorkspace(form: WorkspaceDto) {
+      this.workspaceService.updateWorkspace(form).subscribe({
+        next: data => {
+          this.workspaceName = form.name;
+          this.snackBar.open('Workspace updated successfully!', 'Close', {
+            duration: 3000,  // Duration in ms
+            panelClass: ['success-snackbar'],
+            verticalPosition: 'top',  // Display Snackbar at the top
+            horizontalPosition: 'center'  // Center it horizontally
+          });
+        },
+        error: err => {
+          console.log(err.error);
+          this.snackBar.open('Error updating workspace!', 'Close', {
+            duration: 3000,  
+            panelClass: ['error-snackbar'],
+            verticalPosition: 'top',  // Display Snackbar at the top
+            horizontalPosition: 'center'  // Center it horizontally
+          });
+        }
+      });
+    }
 
   ngOnInit(): void {
     this.isUser = this.authService.isUser();

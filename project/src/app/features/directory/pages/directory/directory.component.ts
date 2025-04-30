@@ -42,8 +42,6 @@ export class DirectoryComponent implements OnInit {
     this.directoryService.updateFolder(form).subscribe({
       next: data => {
         this.valuesUpdated = true;
-        ///1-listen to the result of http request
-        /// then update the corresponding directory
 
         let willBeUpdatedDirectory = this.folders.find(f => f.id == form.id);
         if (willBeUpdatedDirectory)
