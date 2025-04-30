@@ -1,2 +1,2 @@
 # DMS
-# We use Angular(web app) in the project
+# We use Angular(web app) and .Net for Backend in the project
