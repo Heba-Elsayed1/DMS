@@ -11,5 +11,16 @@ import { FormsModule } from '@angular/forms';
 })
 export class LockUserComponent {
 
+ 
+  constructor(protected activeModal: NgbActiveModal) { }
+  duration: number = 0;
+
+  handleLock() {
+    this.activeModal.close(this.duration);
+  }
+
+  handleClose() {
+    this.activeModal.close();
+  }
 
 }
